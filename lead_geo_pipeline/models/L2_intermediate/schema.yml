@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: int_leads_enriched
+    description: Leads enriched with geographic data and GEOGRAPHY column
+    columns:
+      - name: lead_id
+        description: Unique identifier
+        tests:
+          - unique
+          - not_null
+      - name: location_geo
+        description: Snowflake GEOGRAPHY point (lon, lat)
+        tests:
+          - not_null
+      - name: zip_code
+        description: Lead ZIP code
+        tests:
+          - relationships:
+              to: ref('stg_zip_reference')
+              field: zip_code

@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: stg_leads
+    description: Cleaned and standardized lead data from raw source
+    columns:
+      - name: lead_id
+        description: Unique identifier for each lead
+        tests:
+          - unique
+          - not_null
+      - name: zip_code
+        description: 5-digit US ZIP code
+        tests:
+          - not_null
+      - name: deal_value
+        description: Potential deal value in USD
+        tests:
+          - not_null
+      - name: lead_status
+        description: Current stage in sales pipeline
+        tests:
+          - accepted_values:
+              values: ['New', 'Qualified', 'Opportunity', 'Won', 'Lost']
+      - name: created_date
+        description: Date lead was created
+        tests:
+          - not_null
+
+  - name: stg_zip_reference
+    description: US ZIP code geographic reference data
+    columns:
+      - name: zip_code
+        description: 5-digit US ZIP code
+        tests:
+          - unique
+          - not_null
+      - name: latitude
+        description: Geographic latitude
+        tests:
+          - not_null
+      - name: longitude
+        description: Geographic longitude
+        tests:
+          - not_null

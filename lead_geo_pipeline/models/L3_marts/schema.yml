@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fct_leads
+    description: Final fact table for Tableau - leads with geo enrichment and metrics
+    columns:
+      - name: lead_id
+        tests:
+          - unique
+          - not_null
+      - name: location_geo
+        tests:
+          - not_null
+      - name: won_revenue
+        description: Deal value if won, 0 otherwise
+        tests:
+          - not_null
