@@ -2,16 +2,31 @@ version: 2
 
 models:
   - name: fct_leads
-    description: Final fact table for Tableau - leads with geo enrichment and metrics
+    description: |
+      Final fact table optimized for Tableau dashboards. Contains all lead metrics,
+      geographic dimensions, and derived business logic flags.
+      
+      Grain: One row per lead
+      
+      Use cases:
+      - Lead density heatmaps by geography
+      - Conversion rate analysis by region
+      - Territory performance dashboards
     columns:
       - name: lead_id
+        description: Unique identifier
         tests:
           - unique
           - not_null
       - name: location_geo
+        description: Snowflake GEOGRAPHY point for mapping
         tests:
           - not_null
+      - name: pipeline_stage
+        description: Derived flag - 'Active' or 'Closed'
+      - name: is_won
+        description: Binary flag (1=Won, 0=Other)
       - name: won_revenue
-        description: Deal value if won, 0 otherwise
+        description: Deal value if Won, otherwise 0. Use for revenue aggregations.
         tests:
           - not_null

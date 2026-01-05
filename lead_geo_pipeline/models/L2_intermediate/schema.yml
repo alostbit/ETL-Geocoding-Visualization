@@ -2,20 +2,37 @@ version: 2
 
 models:
   - name: int_leads_enriched
-    description: Leads enriched with geographic data and GEOGRAPHY column
+    description: |
+      Leads enriched with geographic reference data including city, state, county, 
+      and Snowflake GEOGRAPHY point column for spatial analysis.
+      
+      Transformation logic:
+      - Joins stg_leads with stg_zip_reference on zip_code
+      - Creates GEOGRAPHY point using ST_MAKEPOINT(longitude, latitude)
+      - Calculates lead age and days to close metrics
     columns:
       - name: lead_id
-        description: Unique identifier
+        description: Unique identifier for each lead
         tests:
           - unique
           - not_null
       - name: location_geo
-        description: Snowflake GEOGRAPHY point (lon, lat)
+        description: Snowflake GEOGRAPHY point (longitude, latitude) for spatial queries
         tests:
           - not_null
       - name: zip_code
-        description: Lead ZIP code
+        description: 5-digit US ZIP code
         tests:
           - relationships:
               to: ref('stg_zip_reference')
               field: zip_code
+      - name: city
+        description: City name from ZIP reference
+      - name: state
+        description: 2-character state code
+      - name: county
+        description: County name
+      - name: lead_age_days
+        description: Days since lead was created (as of current date)
+      - name: days_to_close
+        description: Days from creation to close (NULL if not closed)
