@@ -1,3 +1,10 @@
+{{
+  config(
+    materialized='table',
+    cluster_by=['state', 'created_date']
+  )
+}}
+
 WITH enriched AS (
     SELECT * FROM {{ ref('int_leads_enriched') }}
 ),
