@@ -3,3 +3,5 @@ steps.md
 .claude/settings.local.json
 screenshots
 ~/.dbt/
+internal
+~/.internal/
