@@ -1,0 +1,2 @@
+Common Gotcha:
+LPAD(zip_code, 5, '0') AS zip_code,  -- Pads ZIP: "1234" becomes "01234"

@@ -1,0 +1,38 @@
+dbt Model Layers - What and Why:
+L1 - Staging (models/staging/):
+
+Purpose: Clean and standardize raw data, 1:1 with source tables
+Example: Fix ZIP code formatting (ensure 5 digits), cast dates, rename columns
+Interview answer: "Staging isolates source-specific logic. If Airbyte changes or we swap data sources, only staging models need updates."
+
+L2 - Intermediate/Transformation (models/intermediate/):
+
+Purpose: Business logic, enrichment, joins
+Example: Join leads to ZIP reference, create GEOGRAPHY columns, calculate lead age
+Interview answer: "This is where geo enrichment happens - joining ZIP reference data and creating Snowflake GEOGRAPHY types for spatial analysis."
+
+L3 - Marts (models/marts/):
+
+Purpose: Final tables optimized for BI tools, aggregations
+Example: Fact table with all dimensions ready for Tableau
+Interview answer: "Marts are denormalized for dashboard performance. Territory aggregations, time-series rollups live here."
+
+File locations:
+lead_geo_pipeline/
+└── models/
+    ├── staging/
+    │   ├── stg_leads.sql
+    │   └── stg_zip_reference.sql
+    ├── intermediate/
+    │   └── int_leads_enriched.sql
+    └── marts/
+        └── fct_leads.sql
+The flow:
+
+Seeds (raw_leads, uszips) →
+Staging (clean) →
+Intermediate (enrich with geo) →
+Marts (final for Tableau)
+
+Why staging does ZIP padding:
+Raw data might have "1234" instead of "01234" - JOIN would fail. Staging fixes this once, all downstream models inherit clean data.

@@ -1,0 +1,14 @@
+lead_geo_pipeline:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: vhjpvvn-fm76458
+      user: STEPHENSNOW
+      password: uReG7RwXRHJCqnm
+      role: ACCOUNTADMIN
+      database: LEAD_ANALYTICS
+      warehouse: COMPUTE_WH
+      schema: ANALYTICS
+      threads: 4
+      client_session_keep_alive: False
