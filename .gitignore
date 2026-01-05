@@ -1,2 +1,5 @@
 steps.md
 .dbt/profiles.yml
+.claude/settings.local.json
+screenshots
+~/.dbt/
