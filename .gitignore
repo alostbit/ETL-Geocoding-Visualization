@@ -5,3 +5,41 @@ screenshots
 ~/.dbt/
 internal
 ~/.internal/
+Connection Details/
+
+# Logs and temporary files
+logs/
+*.log
+dbt.log
+
+# Environment and credentials
+.env
+.env.*
+*.pem
+*.key
+*credentials*
+*secrets*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# dbt
+target/
+dbt_packages/
+dbt_modules/
+*.dbtc
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
