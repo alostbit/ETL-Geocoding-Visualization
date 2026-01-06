@@ -18,6 +18,14 @@ enriched AS (
         g.longitude,
         -- Create Snowflake GEOGRAPHY point
         ST_MAKEPOINT(g.longitude, g.latitude) AS location_geo,
+        -- Add US Census region classification
+        CASE
+            WHEN g.state IN ('CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA') THEN 'Northeast'
+            WHEN g.state IN ('IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD') THEN 'Midwest'
+            WHEN g.state IN ('DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA', 'OK', 'TX', 'DC') THEN 'South'
+            WHEN g.state IN ('AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA') THEN 'West'
+            ELSE 'Other'
+        END AS region,
         l.lead_source,
         l.lead_status,
         l.industry,

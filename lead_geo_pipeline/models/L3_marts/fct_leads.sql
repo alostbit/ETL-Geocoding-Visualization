@@ -20,6 +20,7 @@ final AS (
         latitude,
         longitude,
         location_geo,
+        region,
         lead_source,
         lead_status,
         industry,
@@ -31,16 +32,16 @@ final AS (
         lead_age_days,
         days_to_close,
         -- Derived flags for dashboard filtering
-        CASE 
+        CASE
             WHEN lead_status IN ('Won', 'Lost') THEN 'Closed'
             ELSE 'Active'
         END AS pipeline_stage,
-        CASE 
+        CASE
             WHEN lead_status = 'Won' THEN 1
             ELSE 0
         END AS is_won,
         -- Revenue fields
-        CASE 
+        CASE
             WHEN lead_status = 'Won' THEN deal_value
             ELSE 0
         END AS won_revenue
